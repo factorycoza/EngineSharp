@@ -1,28 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace EngineSample
 {
-	public class Branch : EngineResource
-	{
-    private const string path = "branches";
+    public class Branch : EngineResource
+    {
+        private const string Path = "branches";
 
-		public string name { get; set; }
-		public string description { get; set; }
-		public string source_reference { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string SourceReference { get; set; }
 
-    public Branch Update() {
-      return EngineResource.Update<Branch> (this, path);
+        public Branch Update()
+        {
+            return Update(this, Path);
+        }
+
+        public static List<Branch> All()
+        {
+            return All<Branch>(Path);
+        }
+
+        public static Branch Create(Branch branch)
+        {
+            return Create(branch, Path);
+        }
+
     }
-
-		public static List<Branch> All() {
-      return EngineResource.All<Branch> (path);
-		}
-
-    public static Branch Create(Branch branch) {
-      return EngineResource.Create<Branch> (branch, path);
-    }
-
-	}
 }
 

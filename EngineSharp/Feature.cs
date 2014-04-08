@@ -1,12 +1,10 @@
-﻿using System;
-
-namespace EngineSample
+﻿namespace EngineSample
 {
 	public class Feature
 	{
-		public string descriptor { get; set; }
-		public string name { get; set; }
-		public string count { get; set; }
+		public string Descriptor { get; set; }
+		public string Name { get; set; }
+		public string Count { get; set; }
 	}
 }
 
