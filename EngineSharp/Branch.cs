@@ -12,7 +12,7 @@ namespace EngineSample
 		public string source_reference { get; set; }
 
     public Branch Update() {
-      return Branch.Update (this);
+      return EngineResource.Update<Branch> (this, path);
     }
 
 		public static List<Branch> All() {
@@ -21,10 +21,6 @@ namespace EngineSample
 
     public static Branch Create(Branch branch) {
       return EngineResource.Create<Branch> (branch, path);
-    }
-
-    public static Branch Update(Branch branch) {
-      return EngineResource.Update<Branch> (branch, path);
     }
 
 	}

@@ -22,7 +22,7 @@ namespace EngineSample
 		public string source_reference { get; set; }
 
     public Agent Update() {
-      return Agent.Update (this);
+      return EngineResource.Update<Agent> (this, path);
     }
 
     public static List<Agent> All() {
@@ -31,10 +31,6 @@ namespace EngineSample
 
     public static Agent Create(Agent Agent) {
       return EngineResource.Create<Agent> (Agent, path);
-    }
-
-    public static Agent Update(Agent Agent) {
-      return EngineResource.Update<Agent> (Agent, path);
     }
 
 	}

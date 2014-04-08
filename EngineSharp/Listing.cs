@@ -38,7 +38,7 @@ namespace EngineSample
     public string source_reference { get; set; }
 
     public Listing Update() {
-      return Listing.Update (this);
+      return EngineResource.Update<Listing> (this, path);
     }
 
     public static List<Listing> All ()
@@ -51,10 +51,6 @@ namespace EngineSample
 
     public static Listing Create(Listing listing) {
       return EngineResource.Create<Listing> (listing, path);
-    }
-
-    public static Listing Update(Listing listing) {
-      return EngineResource.Update<Listing> (listing, path);
     }
  
   }

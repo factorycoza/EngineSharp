@@ -41,11 +41,11 @@
     <Compile Include="Agent.cs" />
     <Compile Include="Company.cs" />
     <Compile Include="Branch.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Address.cs" />
     <Compile Include="Building.cs" />
     <Compile Include="ListingImage.cs" />
     <Compile Include="Feature.cs" />
+    <Compile Include="SampleProgram.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

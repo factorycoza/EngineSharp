@@ -16,7 +16,7 @@ namespace EngineSample
 		public string url { get; set; }
 
     public Company Update() {
-      return Company.Update (this);
+      return EngineResource.Update<Company> (this, path);
     }
 
 		public static List<Company> All() {
@@ -26,11 +26,7 @@ namespace EngineSample
     public static Company Create(Company company) {
       return EngineResource.Create<Company> (company, path);
     }
-
-    public static Company Update(Company company) {
-      return EngineResource.Update<Company> (company, path);
-    }
-
+      
 	}
 }
 
