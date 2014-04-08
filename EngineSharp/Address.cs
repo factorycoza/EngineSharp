@@ -4,18 +4,18 @@ namespace EngineSample
 {
 	public class Address
 	{
-		public string site { get; set; }
-		public string street_number { get; set; }
-		public string sub_number { get; set; }
-		public string street { get; set; }
-		public string suburb { get; set; }
-		public string town { get; set; }
-		public string municipality { get; set; }
-		public string province { get; set; }
-		public string country { get; set; }
-		public string postal_code { get; set; }
-		public string latitude { get; set; }
-		public string longitude { get; set; }
+		public string Site { get; set; }
+		public string StreetNumber { get; set; }
+		public string SubNumber { get; set; }
+		public string Street { get; set; }
+		public string Suburb { get; set; }
+		public string Town { get; set; }
+		public string Municipality { get; set; }
+		public string Province { get; set; }
+		public string Country { get; set; }
+		public string PostalCode { get; set; }
+		public string Latitude { get; set; }
+		public string Longitude { get; set; }
 	}
 }
 

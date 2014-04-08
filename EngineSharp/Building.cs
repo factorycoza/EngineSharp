@@ -2,10 +2,10 @@
 
 namespace EngineSample
 {
-  public class Building
-  {
-    public string area_unit { get; set; }
-    public int area_value { get; set; }
-  }
+    public class Building
+    {
+        public string AreaUnit { get; set; }
+        public int AreaValue { get; set; }
+    }
 }
 

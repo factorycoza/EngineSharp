@@ -3,30 +3,33 @@ using System.Collections.Generic;
 
 namespace EngineSample
 {
-	public class Company : EngineResource
-	{
-    private const string path = "companies";
+    public class Company : EngineResource
+    {
+        private const string Path = "companies";
 
-		public string name { get; set; }
-		public string description { get; set; }
-		public string source_reference { get; set; }
-		public string email { get; set; }
-		public string telephone { get; set; }
-		public string fax { get; set; }
-		public string url { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string SourceReference { get; set; }
+        public string Email { get; set; }
+        public string Telephone { get; set; }
+        public string Fax { get; set; }
+        public string Url { get; set; }
 
-    public Company Update() {
-      return EngineResource.Update<Company> (this, path);
+        public Company Update()
+        {
+            return Update(this, Path);
+        }
+
+        public static List<Company> All()
+        {
+            return All<Company>(Path);
+        }
+
+        public static Company Create(Company company)
+        {
+            return Create(company, Path);
+        }
+
     }
-
-		public static List<Company> All() {
-      return EngineResource.All<Company> (path);
-		}
-
-    public static Company Create(Company company) {
-      return EngineResource.Create<Company> (company, path);
-    }
-      
-	}
 }
 

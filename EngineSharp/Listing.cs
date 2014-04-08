@@ -4,55 +4,55 @@ using RestSharp;
 
 namespace EngineSample
 {
-  public class Listing : EngineResource
-  {
-    private const string path = "listings";
-
-    public Address address { get; set; }
-    public List<Agent> agents { get; set; }
-    public string authority { get; set; }
-    public List<Building> buildings { get; set; }
-    public string category { get; set; }
-    public string currency_code { get; set; }
-    public string currency_name { get; set; }
-    public DateTime date_available { get; set; }
-    public string description { get; set; }
-    public List<Feature> features { get; set; }
-    public DateTime first_listed_at { get; set; }
-    public bool furnished { get; set; }
-    public string headline { get; set; }
-    public List<ListingImage> images { get; set; }
-    public DateTime list_until { get; set; }
-    public string property_type { get; set; }
-    public string listing_type { get; set; }
-    public bool negotiable { get; set; }
-    public bool new_construction { get; set; }
-    public string ownership_type { get; set; }
-    public bool price_on_application { get; set; }
-    public int rates_amount { get; set; }
-    public int sale_price { get; set; }
-    public string status_sellable { get; set; }
-    public string tenancy { get; set; }
-    public string terms { get; set; }
-    public bool under_offer { get; set; }
-    public string source_reference { get; set; }
-
-    public Listing Update() {
-      return EngineResource.Update<Listing> (this, path);
-    }
-
-    public static List<Listing> All ()
+    public class Listing : EngineResource
     {
-      IRestRequest request = CreateRequest (path, Method.GET);
-      request.RootElement = "results"; // this is to do with the way index requests are paged
-      IRestResponse<List<Listing>> listings = Client ().Execute<List<Listing>> (request);
-      return listings.Data;
-    }
+        private const string path = "listings";
 
-    public static Listing Create(Listing listing) {
-      return EngineResource.Create<Listing> (listing, path);
+        public Address Address { get; set; }
+        public List<Agent> Agents { get; set; }
+        public string Authority { get; set; }
+        public List<Building> Buildings { get; set; }
+        public string Category { get; set; }
+        public string CurrencyCode { get; set; }
+        public string CurrencyName { get; set; }
+        public DateTime DateAvailable { get; set; }
+        public string Description { get; set; }
+        public List<Feature> Features { get; set; }
+        public DateTime FirstListedAt { get; set; }
+        public bool Furnished { get; set; }
+        public string Headline { get; set; }
+        public List<ListingImage> Images { get; set; }
+        public DateTime ListUntil { get; set; }
+        public string PropertyType { get; set; }
+        public string ListingType { get; set; }
+        public bool Negotiable { get; set; }
+        public bool NewConstruction { get; set; }
+        public string OwnershipType { get; set; }
+        public bool PriceOnApplication { get; set; }
+        public int RatesAmount { get; set; }
+        public int SalePrice { get; set; }
+        public string StatusSellable { get; set; }
+        public string Tenancy { get; set; }
+        public string Terms { get; set; }
+        public bool UnderOffer { get; set; }
+        public string SourceReference { get; set; }
+
+        public Listing Update()
+        {
+            return Update(this, path);
+        }
+
+        public static List<Listing> All()
+        {
+            IRestRequest request = CreateRequest(path, Method.GET);
+            request.RootElement = "results"; // this is to do with the way index requests are paged
+            IRestResponse<List<Listing>> listings = Client().Execute<List<Listing>>(request);
+            return listings.Data;
+        }
+
+        public static Listing Create(Listing listing)
+        {
+            return Create(listing, path);
+        }
     }
- 
-  }
 }
-

@@ -1,38 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace EngineSample
 {
-  public class Agent : EngineResource
-	{
-    private const string path = "agents";
+    public class Agent : EngineResource
+    {
+        private const string Path = "agents";
 
-    public int branch_id { get; set; }
-		public string first_name { get; set; }
-		public string last_name { get; set; }
-		public string email { get; set; }
-		public string telephone { get; set; }
-		public string mobile { get; set; }
-		public string fax { get; set; }
-		public string url { get; set; }
-		public string twitter_url { get; set; }
-		public string facebook_url { get; set; }
-		public string linkedin_url { get; set; }
-		public string secondary_phone_number { get; set; }
-		public string source_reference { get; set; }
+        public int BranchId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Telephone { get; set; }
+        public string Mobile { get; set; }
+        public string Fax { get; set; }
+        public string Url { get; set; }
+        public string TwitterUrl { get; set; }
+        public string FacebookUrl { get; set; }
+        public string LinkedinUrl { get; set; }
+        public string SecondaryPhoneNumber { get; set; }
+        public string SourceReference { get; set; }
 
-    public Agent Update() {
-      return EngineResource.Update<Agent> (this, path);
+        public Agent Update()
+        {
+            return Update(this, Path);
+        }
+
+        public static List<Agent> All()
+        {
+            return All<Agent>(Path);
+        }
+
+        public static Agent Create(Agent agent)
+        {
+            return Create(agent, Path);
+        }
+
     }
-
-    public static List<Agent> All() {
-      return EngineResource.All<Agent> (path);
-    }
-
-    public static Agent Create(Agent Agent) {
-      return EngineResource.Create<Agent> (Agent, path);
-    }
-
-	}
 }
 
