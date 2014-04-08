@@ -44,9 +44,10 @@ namespace EngineSample
 
         public static List<Listing> All()
         {
-            IRestRequest request = CreateRequest(path, Method.GET);
+            var request = CreateRequest(path, Method.GET);
             request.RootElement = "results"; // this is to do with the way index requests are paged
-            IRestResponse<List<Listing>> listings = Client().Execute<List<Listing>>(request);
+            var client = CreateClient();
+            var listings = client.Execute<List<Listing>>(request);
             return listings.Data;
         }
 

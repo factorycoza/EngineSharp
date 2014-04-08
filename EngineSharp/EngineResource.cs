@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Configuration;
+using System.Reflection.Emit;
 using RestSharp;
 using System.Text;
 using System.Collections.Generic;
@@ -8,20 +10,19 @@ namespace EngineSample
 {
     public class EngineResource
     {
-        public EngineResource() { }
-
-        public int id { get; set; }
+        public int Id { get; set; }
 
         // Replace these with your own API key and secret from config
-        private const string ApiKey = "4F058B962F98EBC48684369E1825268A";
-        private const string ApiSecret = "8496DBDFF8AEA7D6B8748C2A33FB9258";
-        private const string BasePath = "http://staging.engine.co.za/v1/property";
-        private static RestClient _client;
+        private readonly static string ApiKey = ConfigurationManager.AppSettings["4F058B962F98EBC48684369E1825268A"];
+        private readonly static string ApiSecret = ConfigurationManager.AppSettings["8496DBDFF8AEA7D6B8748C2A33FB9258"];
+        private const string BasePath = "https://staging.engine.co.za/v1/property";
 
         protected static IRestRequest CreateRequest(string path, Method method)
         {
-            var request = new RestRequest(path, method);
-            request.RequestFormat = DataFormat.Json;
+            var request = new RestRequest(path, method)
+            {
+                RequestFormat = DataFormat.Json
+            };
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Accept", "application/json");
             var basicAuth = Convert.ToBase64String(Encoding.Default.GetBytes(ApiKey + ":" + ApiSecret));
@@ -29,17 +30,24 @@ namespace EngineSample
             return request;
         }
 
-        protected static RestClient Client()
+        protected static RestClient CreateClient()
         {
-            if (_client == null)
-                _client = new RestClient(BasePath);
-            return _client;
+            // Restsharp is not thread safe so do not share instances
+            // of the same object
+            var restClient = new RestClient(BasePath)
+            {
+                Authenticator = new HttpBasicAuthenticator(ApiKey, ApiSecret),
+                FollowRedirects = true,
+                Proxy = new WebProxy("localhost", 8888)
+            };
+            return restClient;
         }
 
         public static List<T> All<T>(string path) where T : EngineResource, new()
         {
             var request = CreateRequest(path, Method.GET);
-            var resources = Client().Execute<List<T>>(request);
+            var client = CreateClient();
+            var resources = client.Execute<List<T>>(request);
             return resources.Data;
         }
 
@@ -47,7 +55,8 @@ namespace EngineSample
         {
             var request = CreateRequest(path, Method.POST);
             request.AddBody(resource);
-            var response = Client().Execute<T>(request);
+            var client = CreateClient();
+            var response = client.Execute<T>(request);
             if (response.StatusCode != HttpStatusCode.Created)
                 throw new InvalidOperationException("Create failed: " + response.StatusCode.ToString());
             return response.Data;
@@ -55,9 +64,10 @@ namespace EngineSample
 
         public static T Update<T>(T resource, string path) where T : EngineResource, new()
         {
-            var request = CreateRequest(path + "/" + resource.id, Method.PATCH);
+            var request = CreateRequest(path + "/" + resource.Id, Method.PATCH);
             request.AddBody(resource);
-            var response = Client().Execute<T>(request);
+            var client = CreateClient();
+            var response = client.Execute<T>(request);
             if (response.StatusCode != HttpStatusCode.OK)
                 throw new InvalidOperationException("Update failed: " + response.StatusCode.ToString());
             return response.Data;
