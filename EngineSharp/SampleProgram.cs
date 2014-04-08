@@ -1,11 +1,4 @@
 using System;
-using System.Collections;
-using System.Text;
-using System.Net;
-using System.IO;
-using System.Collections.Generic;
-using RestSharp;
-using RestSharp.Serializers;
 
 namespace EngineSample
 {
@@ -13,103 +6,163 @@ namespace EngineSample
     {
         public static void Main(string[] args)
         {
-
-            // companies
+            // ****************** Companies ******************
+            Console.WriteLine("Getting Companies ...");
             var companies = Company.All();
             foreach (var company in companies)
             {
                 Console.WriteLine(company.Id + ": " + company.Name);
             }
 
-            return;
-
-            var newCompany = new Company()
+            Company thisCompany;
+            if (companies.Count == 0)
             {
-                Description = "Acme Properties",
-                Name = "Acme Prop",
-                Email = "acme@engine.co.za"
-            };
-            newCompany = Company.Create(newCompany);
-            newCompany.Name = "Other Acme Prop";
-            newCompany = newCompany.Update();
+                Console.WriteLine("Creating a new company ...");
+                thisCompany = new Company
+                {
+                    Description = "Acme Properties",
+                    Name = "Acme Prop",
+                    Email = "acme@engine.co.za"
+                };
+                thisCompany = Company.Create(thisCompany);
+            }
+            else
+            {
+                thisCompany = companies[0];
+            }
 
-            // branches
+            Console.WriteLine("Updating company ...");
+            thisCompany.Name = "Other Acme Prop";
+            thisCompany = thisCompany.Update();
+
+            // ****************** Branches ******************
+            Console.WriteLine("Getting Branches ...");
             var branches = Branch.All();
             foreach (var branch in branches)
             {
                 Console.WriteLine(branch.Id + ": " + branch.Name);
             }
-            var newBranch = new Branch()
-            {
-                Name = "Acme Branch #1",
-                Description = "The first ever Acme Branch"
-            };
-            newBranch = Branch.Create(newBranch);
-            newBranch.Name = "Acme Branch #2 actually";
-            newBranch = newBranch.Update();
 
-            // agents
+            Branch thisBranch;
+            if (branches.Count == 0)
+            {
+                Console.WriteLine("Creating a new branch ...");
+                thisBranch = new Branch
+                {
+                    Name = "Acme Branch #1",
+                    Description = "The first ever Acme Branch"
+                };
+                thisBranch = Branch.Create(thisBranch);
+            }
+            else
+            {
+                thisBranch = branches[0];
+            }
+
+            Console.WriteLine("Updating branch ...");
+            thisBranch.Name = "Acme Branch #2 actually";
+            thisBranch = thisBranch.Update();
+
+            // ****************** Agents ******************
+            Console.WriteLine("Getting Agents ...");
             var agents = Agent.All();
             foreach (var agent in agents)
             {
                 Console.WriteLine(agent.Id + ": " + agent.FirstName + " " + agent.LastName);
             }
-            var newAgent = new Agent()
-            {
-                BranchId = newBranch.Id,
-                FirstName = "John",
-                LastName = "Smith",
-                Email = "smithers@engine.co.za"
-            };
-            newAgent = Agent.Create(newAgent);
-            newAgent.FirstName = "Jack";
-            newAgent = newAgent.Update();
 
-            // listings
+            Agent thisAgent;
+            if (agents.Count == 0)
+            {
+                Console.WriteLine("Creating a new agent ...");
+                thisAgent = new Agent
+                {
+                    BranchId = branches[0].Id,
+                    FirstName = "John",
+                    LastName = "Smith",
+                    Email = "smithers@engine.co.za"
+                };
+                thisAgent = Agent.Create(thisAgent);
+            }
+            else
+            {
+                thisAgent = agents[0];
+            }
+
+            Console.WriteLine("Updating agent ...");
+            thisAgent.FirstName = "Jack";
+            thisAgent = thisAgent.Update();
+
+            // ****************** Listings ******************
             var listings = Listing.All();
             foreach (var listing in listings)
             {
-                Console.WriteLine(listing.Id.ToString() + ": " + listing.Headline);
+                Console.WriteLine(listing.Id + ": " + listing.Headline);
             }
-            var new_listing = new Listing()
+
+            Listing thisListing;
+            if (listings.Count == 0)
             {
-                PropertyType = "residential",
-                ListingType = "sale",
-                StatusSellable = "current",
-                Headline = "A cool house",
-                Description = "This is a pretty cool house",
-                Features = new List<Feature>(),
-                Images = new List<ListingImage>(),
-                Buildings = new List<Building>()
-            };
-            var bedrooms = new Feature()
+                thisListing = new Listing
+                {
+                    PropertyType = "residential",
+                    ListingType = "sale",
+                    StatusSellable = "current",
+                    Headline = "A cool house",
+                    Description = "This is a pretty cool house",
+                    Address = new Address
+                    {
+                        Suburb = "Wonderland",
+                        PostalCode = "1234"
+                    },
+                    Features =
+                    {
+                        new Feature
+                        {
+                            Name = "Bedrooms",
+                            Count = "2"
+                        }
+                    },
+                    Images =
+                    {
+                        new ListingImage
+                        {
+                            Caption = "Awesomesauce",
+                            Url =
+                                "http://propertygenie.co.za/assets/index_background-84ec0c49973c354e38aea4b19d440e69.jpg"
+                        },
+                        new ListingImage
+                        {
+                            Caption = "Awesomesauce",
+                            Url =
+                                "http://propertygenie.co.za/assets/index_background-84ec0c49973c354e38aea4b19d440e69.jpg"
+                        }
+                    },
+                    Buildings =
+                    {
+                        new Building
+                        {
+                            AreaUnit = "sqm",
+                            AreaValue = 1000
+                        }
+                    }
+                };
+                thisListing = Listing.Create(thisListing);
+            }
+            else
             {
-                Name = "Bedrooms",
-                Count = "2"
-            };
-            new_listing.Features.Add(bedrooms);
-            var image = new ListingImage()
-            {
-                Caption = "Awesomesauce",
-                Url = "http://propertygenie.co.za/assets/index_background-84ec0c49973c354e38aea4b19d440e69.jpg"
-            };
-            new_listing.Images.Add(image);
-            new_listing = Listing.Create(new_listing);
-            new_listing.Headline = "Definitely a cool house";
-            new_listing.Address = new Address()
+                thisListing = listings[0];
+            }
+            thisListing.Headline = "Definitely a cool house";
+            thisListing.Address = new Address()
             {
                 Street = "Northumberland Ave",
                 StreetNumber = "123",
                 Suburb = "Wonderland",
-                Town = "Townville"
+                Town = "Townville",
+                PostalCode = "1234"
             };
-            var building = new Building()
-            {
-                AreaUnit = "sqm",
-                AreaValue = 1000
-            };
-            new_listing.Buildings.Add(building);
-            new_listing.Update();
+            thisListing.Update();
 
             Console.WriteLine("Done..");
             Console.ReadLine();
